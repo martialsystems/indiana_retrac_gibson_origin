@@ -19,6 +19,12 @@
       "paths": ["gibsonforge/**", "tests/test_gibsonforge_laws.py", "src/gibson/pipeline.py"]
     },
     {
+      "id": "buyer-packet",
+      "argv": [".venv/bin/python", "scripts/write_packet.py"],
+      "timeout_s": 60,
+      "paths": ["src/gibson/sheet.py", "scripts/write_packet.py", "delivery/**", "logs/in_live/stage_c_report.json"]
+    },
+    {
       "id": "readme-no-rows",
       "argv": [".venv/bin/python", "scripts/check_readme.py"],
       "timeout_s": 30,

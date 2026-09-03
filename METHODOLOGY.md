@@ -66,7 +66,7 @@ Two figures max. They live on the buyer sheet, not in the README.
 
 ## Buyer file
 
-One cover paragraph and one table of Gibson 2024 reported cells (2023 same-quarter tons and share, 2024 actual tons and share, residual, bar share on the intersection). Delivered as `delivery/gibson_origin_2024_sheet.pdf`. Not a git clone. Sheet lock `c89de5b`.
+Buyer packet: operator PDF with who, two answers, plants, how to read a row, and what is missing; one table of Gibson 2024 reported cells (2023 tons and share, 2024 tons and share, residual, bar share on the intersection); a CSV of the same 48 rows and columns; a five-line cover email. Delivered under `delivery/`. Not a git clone. Sheet lock `c89de5b`.
 
 ## Residual
 

@@ -1,5 +1,5 @@
 # Copyright (c) 2026 Martial Systems LLC. All rights reserved.
-"""Buyer PDF is the only Gibson cell table."""
+"""Buyer packet (PDF plus one delivery CSV) is the only Gibson cell table."""
 
 from __future__ import annotations
 

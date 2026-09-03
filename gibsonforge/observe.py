@@ -16,6 +16,7 @@ from gibson.config import (
     SHEET_HOLDOUT,
     SHEET_LOCK,
 )
+from gibson.sheet import PACKET_CSV
 
 _CLAIM_FLAGS = (
     "casualty",
@@ -34,7 +35,7 @@ def _cells(live: dict[str, Any] | None) -> list[dict[str, Any]]:
     return [r for r in rows if isinstance(r, dict)]
 
 
-def readme_has_county_rows(text: str, cells: list[dict[str, Any]]) -> bool:
+def has_facility_identities(text: str, cells: list[dict[str, Any]]) -> bool:
     for cell in cells:
         name = str(cell.get("facility_name") or "")
         fid = str(cell.get("facility_id") or "")
@@ -42,6 +43,12 @@ def readme_has_county_rows(text: str, cells: list[dict[str, Any]]) -> bool:
             return True
         if fid and re.search(rf"\b{re.escape(fid)}\b", text):
             return True
+    return False
+
+
+def readme_has_county_rows(text: str, cells: list[dict[str, Any]]) -> bool:
+    if has_facility_identities(text, cells):
+        return True
     if re.search(r"Gibson 2024 reported cells", text) and "|" in text and "2024 tons" in text:
         return True
     return False
@@ -64,12 +71,15 @@ def extra_cell_tables(repo: Path, cells: list[dict[str, Any]]) -> bool:
                     if path.is_file():
                         yield path
 
+    allowed_csv = {(repo / "delivery" / PACKET_CSV).resolve()}
     for path in _files():
         if path.suffix.lower() == ".csv":
+            if path.resolve() in allowed_csv:
+                continue
             return True
         if path.suffix.lower() == ".md" and path.name != "README.md":
             body = path.read_text(encoding="utf-8")
-            if readme_has_county_rows(body, cells):
+            if has_facility_identities(body, cells):
                 return True
     return False
 
