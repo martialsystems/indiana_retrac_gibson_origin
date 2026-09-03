@@ -1,0 +1,135 @@
+# Copyright (c) 2026 Martial Systems LLC. All rights reserved.
+"""Stage 0 fixture. Live fetch-or-stop. Two figures. Buyer PDF from JSON."""
+
+from __future__ import annotations
+
+import json
+from pathlib import Path
+from typing import Any
+
+from gibson.claims import require_clean, require_paths_clean
+from gibson.config import PARENT_CITATION, PARENT_LOCK, QUESTION, REPO_ROOT
+from gibson.errors import StageOrderError
+from gibson.fetch import fetch_live
+from gibson.figure import write_two
+from gibson.fixture import build_fixture
+from gibson.sheet import write_sheet
+from gibson.skill import score
+from gibson.split import assert_split
+
+_ARRAY_KEYS = ("obs_ly", "pred_ly", "obs_bar", "pred_bar")
+
+
+def _public_block(block: dict[str, Any]) -> dict[str, Any]:
+    return {k: v for k, v in block.items() if k not in _ARRAY_KEYS}
+
+
+def _jsonable(report: dict[str, Any]) -> dict[str, Any]:
+    out = dict(report)
+    if isinstance(out.get("holdout"), dict):
+        out["holdout"] = _public_block(out["holdout"])
+    if isinstance(out.get("confirm"), dict):
+        out["confirm"] = _public_block(out["confirm"])
+    return out
+
+
+def _run(
+    log_dir: Path,
+    *,
+    rows: list[dict[str, Any]],
+    counties: dict[str, dict[str, Any]],
+    facilities: dict[str, dict[str, Any]],
+    fixture: bool,
+    extra: dict[str, Any] | None = None,
+    buyer: bool = False,
+) -> dict[str, Any]:
+    require_clean(QUESTION, source="question")
+    fit = score(rows, counties=counties, facilities=facilities)
+    assert_split(
+        confirm_in_train=bool(fit["confirm_in_train"]),
+        confirm_in_j=bool(fit["confirm_in_j"]),
+        random_split=bool(fit["random_split"]),
+    )
+    paths = write_two(log_dir, fit=fit, live=not fixture)
+    log_dir.mkdir(parents=True, exist_ok=True)
+    report: dict[str, Any] = {
+        "stage": "0" if fixture else "C",
+        "fixture": fixture,
+        "question": QUESTION,
+        "contestant": "last_year",
+        "bar": "mileage_plus_population",
+        "ridge": False,
+        "hgb": False,
+        "sklearn_contestant": False,
+        "live_retrac_login": False,
+        "winter_page_hero": False,
+        "xlsx_ok": True,
+        "coords_ok": True,
+        "parent_lock": PARENT_LOCK,
+        "parent_citation": PARENT_CITATION,
+        "units": {"skill": "rmse_tons"},
+        "figures": paths,
+        **{k: fit[k] for k in (
+            "n_rows",
+            "n_train",
+            "n_holdout",
+            "n_confirm",
+            "n_facilities_j",
+            "n_holdout_only_facilities",
+            "n_point",
+            "n_centroid",
+            "holdout",
+            "confirm",
+            "confirm_in_train",
+            "confirm_in_j",
+            "confirm_reverses_holdout",
+            "random_split",
+            "train_years",
+            "holdout_years",
+            "confirm_years",
+            "origin_pop_cancels",
+            "last_year_beats_bar",
+            "origin_key",
+            "origin_name",
+            "facility_set_j",
+        )},
+    }
+    if extra:
+        report.update(extra)
+    sheet_name = "fixture_sheet.pdf" if fixture else "gibson_origin_2024_sheet.pdf"
+    sheet_path = write_sheet(log_dir / sheet_name, report=report, log_dir=log_dir)
+    report["sheet"] = sheet_path.name
+    if buyer and not fixture:
+        delivery = REPO_ROOT / "delivery" / sheet_path.name
+        delivery.parent.mkdir(parents=True, exist_ok=True)
+        delivery.write_bytes(sheet_path.read_bytes())
+        report["delivery"] = str(delivery.relative_to(REPO_ROOT))
+    payload = _jsonable(report)
+    require_clean(payload["question"], source="report_question")
+    require_clean(payload["holdout"]["cover"], source="report_cover")
+    dest = log_dir / ("stage0_report.json" if fixture else "stage_c_report.json")
+    dest.write_text(json.dumps(payload, indent=2, default=str) + "\n", encoding="utf-8")
+    readme = REPO_ROOT / "README.md"
+    require_paths_clean([readme, dest] if readme.is_file() else [dest])
+    return report
+
+
+def stage0_fixture(log_dir: Path) -> dict[str, Any]:
+    rows, counties, facilities = build_fixture()
+    return _run(log_dir, rows=rows, counties=counties, facilities=facilities, fixture=True)
+
+
+def run_live(log_dir: Path, *, cache_dir: Path) -> dict[str, Any]:
+    stage0 = REPO_ROOT / "logs" / "stage0_fixture" / "stage0_report.json"
+    if not stage0.is_file():
+        raise StageOrderError("Stage 0 fixture before live")
+    rows, counties, facilities, meta = fetch_live(cache_dir=cache_dir)
+    return _run(
+        log_dir,
+        rows=rows,
+        counties=counties,
+        facilities=facilities,
+        fixture=False,
+        buyer=True,
+        extra={"fetch_meta": meta},
+    )

@@ -1,0 +1,7 @@
+{
+  "facilities_geojson": "EPSG:4326",
+  "counties": "EPSG:4326",
+  "warp": "none",
+  "gis_query_outSR": 4326,
+  "note": "IndianaMap FeatureServer query requested outSR=4326. County centroids stored as WGS84 lon/lat. No datum transform."
+}

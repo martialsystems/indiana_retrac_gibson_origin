@@ -1,0 +1,22 @@
+{
+  "runtime_checks": [
+    {
+      "id": "unit-tests",
+      "argv": [".venv/bin/python", "-m", "pytest", "tests/", "-q"],
+      "timeout_s": 180,
+      "paths": ["src/**", "tests/**", "scripts/**", "requirements.txt", "vbd.runtime.json", "README.md"]
+    },
+    {
+      "id": "fixture-path",
+      "argv": [".venv/bin/python", "scripts/run_fixture.py", "logs/stage0_fixture"],
+      "timeout_s": 120,
+      "paths": ["src/**", "scripts/**", "tests/**"]
+    },
+    {
+      "id": "readme-no-rows",
+      "argv": [".venv/bin/python", "scripts/check_readme.py"],
+      "timeout_s": 30,
+      "paths": ["README.md", "logs/in_live/**", "src/**", "tests/**"]
+    }
+  ]
+}
