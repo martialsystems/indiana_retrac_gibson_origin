@@ -45,6 +45,7 @@ INDEX_GIST = "https://gist.github.com/martialsystems/66b896b0a4a0b8cba2b478aef64
 MAPS_GIST = "https://gist.github.com/martialsystems/16584e78d079666f7e8994b4cc6158be"
 PARENT_REPO = "https://github.com/martialsystems/indiana_retrac_last_year"
 PARENT_LOCK = "5800fc3"
+SHEET_LOCK = "c89de5b"
 
 # Statewide baseline citation only. Do not recompute. Do not restamp 5800fc3.
 PARENT_CITATION = {
@@ -61,6 +62,17 @@ PARENT_CITATION = {
         "holdout_tons": 1540946,
         "n": 35,
     },
+}
+
+# Frozen live skill at SHEET_LOCK. One-decimal tons, as the README.
+SHEET_HOLDOUT = {
+    "last_year_rmse": 15596.8,
+    "bar_rmse": 35014.7,
+    "origin_total_last_year_rmse": 45939.1,
+    "origin_total_bar_rmse": 0.0,
+    "n_intersection": 35,
+    "n_cells": 48,
+    "n_origin_total": 4,
 }
 
 LIVE_SCATTER_SUBTITLE = (

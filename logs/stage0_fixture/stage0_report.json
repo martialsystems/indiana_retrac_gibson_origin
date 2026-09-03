@@ -12,6 +12,7 @@
   "xlsx_ok": true,
   "coords_ok": true,
   "parent_lock": "5800fc3",
+  "sheet_lock": "c89de5b",
   "parent_citation": {
     "sha": "5800fc3",
     "repo": "https://github.com/martialsystems/indiana_retrac_last_year",

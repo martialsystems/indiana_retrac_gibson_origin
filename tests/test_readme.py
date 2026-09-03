@@ -5,7 +5,7 @@ import re
 from pathlib import Path
 
 from gibson.claims import scan_text
-from gibson.config import INDEX_GIST, PARENT_LOCK, QUESTION
+from gibson.config import INDEX_GIST, PARENT_LOCK, QUESTION, SHEET_LOCK
 
 REPO = Path(__file__).resolve().parents[1]
 
@@ -24,6 +24,8 @@ def test_readme_opens_with_the_question() -> None:
     assert "Two answers" in text
     assert "Do not average" in text
     assert PARENT_LOCK in text
+    assert SHEET_LOCK in text
+    assert "gibsonforge/" in text
     assert "6504.7" in text
     assert "16633.0" in text
     assert "origin pop cancels" in text.lower() or "origin population cancels" in text.lower()

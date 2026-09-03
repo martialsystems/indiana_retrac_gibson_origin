@@ -10,7 +10,9 @@ The table and cover paragraph are the buyer PDF. README may cite `5800fc3` and s
 
 Contestant is last year, same quarter. Bar is origin population over great-circle miles, J restricted to Gibson train-era destinations. Origin population cancels. Confirmation 2025 is out of train and out of J. The science lock is the public IDEM quarterly XLSX, not `app.re-trac.com`. Empty XLSX, unmatched origin county, missing facility coordinates, or missing CRS stop (`run_live.py` exit 2). Stage 0 fixture before live. Two figures max.
 
-GraphForge is unpinned until the operator says yes.
+Sheet lock `c89de5b`. Confirmation 2025 stays out. Do not start Vermillion inbound in this repo. Do not re-run live onto `logs/in_live`.
+
+`gibsonforge/` is the GraphForge tripwire. It refuses: Stage 0 missing before live; two answers averaged; README county rows; a Gibson cell table outside the buyer PDF; restamp of `5800fc3` or `c89de5b`; claim bans (casualties, climate attribution, population-at-risk, logistics optimized, truck routing, next-year Gibson total). Fixture RMSE, figure styling, and gist presence stay on pytest and vbd_gate.
 
 ## Verify
 

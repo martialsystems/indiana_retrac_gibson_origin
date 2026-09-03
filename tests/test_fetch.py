@@ -7,6 +7,10 @@ import pytest
 
 from gibson.config import TON_COLS
 from gibson.errors import FetchError, StageOrderError
+from gibsonforge._bootstrap import ensure_paths
+
+ensure_paths()
+from graphforge.product_law import LawBlockedError
 from gibson.facilities import load_gis
 from gibson.fetch import fetch_live
 from gibson.geo import load_crs_sidecar
@@ -65,5 +69,5 @@ def test_live_refuses_without_stage0(tmp_path: Path, monkeypatch: pytest.MonkeyP
     from gibson import pipeline
 
     monkeypatch.setattr(pipeline, "REPO_ROOT", tmp_path)
-    with pytest.raises(StageOrderError, match="Stage 0"):
+    with pytest.raises((StageOrderError, LawBlockedError)):
         run_live(tmp_path / "out", cache_dir=tmp_path)

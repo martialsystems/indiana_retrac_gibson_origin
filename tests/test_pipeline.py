@@ -3,7 +3,7 @@
 import json
 from pathlib import Path
 
-from gibson.config import QUESTION
+from gibson.config import QUESTION, SHEET_HOLDOUT, SHEET_LOCK
 from gibson.errors import FigureCapError
 from gibson.figure import _cap
 from gibson.pipeline import stage0_fixture
@@ -35,6 +35,7 @@ def test_fixture_two_figures(tmp_path: Path) -> None:
     assert "obs_ly" not in payload["holdout"]
     assert payload["holdout"]["cells"]
     assert payload["parent_lock"] == "5800fc3"
+    assert payload["sheet_lock"] == SHEET_LOCK
 
 
 def test_live_holdout_split() -> None:
@@ -57,6 +58,11 @@ def test_live_holdout_split() -> None:
     assert "rmse_tons" in hold["last_year"]
     assert "rmse_tons" in hold["bar"]
     assert live["last_year_beats_bar"] == (hold["last_year"]["rmse_tons"] < hold["bar"]["rmse_tons"])
+    assert round(hold["last_year"]["rmse_tons"], 1) == SHEET_HOLDOUT["last_year_rmse"]
+    assert round(hold["bar"]["rmse_tons"], 1) == SHEET_HOLDOUT["bar_rmse"]
+    assert round(hold["origin_total"]["last_year_rmse"], 1) == SHEET_HOLDOUT["origin_total_last_year_rmse"]
+    assert hold["n_last_year"] == SHEET_HOLDOUT["n_intersection"]
+    assert hold["n_cells"] == SHEET_HOLDOUT["n_cells"]
     assert live["figures"] == ["scatter.png", "dest_rank.png"]
     assert live["fetch_meta"]["n_counties"] == 1
     assert live["fetch_meta"]["live_retrac_login"] is False
