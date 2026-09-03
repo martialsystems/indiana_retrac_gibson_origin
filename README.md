@@ -27,11 +27,7 @@ Coordinates: IndianaMap points when a name match exists; otherwise the host-coun
 
 ![Figure 1. Holdout scatter](logs/in_live/scatter.png)
 
-Figure 1. Holdout tons. Last year RMSE 15596.8 vs mileage-plus-population 35014.7. Tons of error.
-
-![Figure 2. Destination rank](logs/in_live/dest_rank.png)
-
-Figure 2. 2023 share versus 2024 share by receiving facility. 26-06 holds 97.8% of 2024 reported tons.
+Figure 1. Holdout tons. Left: full scale. Right: zoom so the cells below 26-06 are visible. Last year RMSE 15596.8 vs mileage-plus-population 35014.7.
 
 ## The three results
 
@@ -91,7 +87,7 @@ PYTHONPATH=src:. python3 scripts/run_fixture.py logs/stage0_fixture
 PYTHONPATH=src:. python3 scripts/run_live.py logs/in_live data/raw
 ```
 
-Two figures max: holdout scatter, and 2023-vs-2024 destination shares.
+One figure: holdout scatter, full scale plus zoom.
 
 ## Files
 
@@ -102,6 +98,6 @@ Two figures max: holdout scatter, and 2023-vs-2024 destination shares.
 | [CHECKLIST.md](CHECKLIST.md) | Operator list so nobody improves the frozen numbers |
 | `src/gibson/` | Join, inverse-miles bar, last-year copy, figures |
 | `gibsonforge/` | GraphForge pin |
-| `logs/in_live/` | Locked 2024 report and the two plots |
+| `logs/in_live/` | Locked 2024 report and the scatter |
 
 Parent statewide lock (`5800fc3`) is a citation only. This tree does not promote it.

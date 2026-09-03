@@ -12,9 +12,9 @@ from gibson.pipeline import stage0_fixture
 def test_fixture_two_figures(tmp_path: Path) -> None:
     report = stage0_fixture(tmp_path)
     assert report["question"] == QUESTION
-    assert report["figures"] == ["scatter.png", "dest_rank.png"]
+    assert report["figures"] == ["scatter.png"]
     assert (tmp_path / "scatter.png").is_file()
-    assert (tmp_path / "dest_rank.png").is_file()
+    assert not (tmp_path / "dest_rank.png").is_file()
     assert not (tmp_path / "fixture_sheet.pdf").is_file()
     assert report["contestant"] == "last_year"
     assert report["ridge"] is False
@@ -63,7 +63,9 @@ def test_live_holdout_split() -> None:
     assert round(hold["origin_total"]["last_year_rmse"], 1) == SHEET_HOLDOUT["origin_total_last_year_rmse"]
     assert hold["n_last_year"] == SHEET_HOLDOUT["n_intersection"]
     assert hold["n_cells"] == SHEET_HOLDOUT["n_cells"]
-    assert live["figures"] == ["scatter.png", "dest_rank.png"]
+    assert "scatter.png" in live["figures"]
+    assert (path.parent / "scatter.png").is_file()
+    assert not (path.parent / "dest_rank.png").is_file()
     assert live["fetch_meta"]["n_counties"] == 1
     assert live["fetch_meta"]["live_retrac_login"] is False
     assert live["n_point"] >= 1
@@ -79,7 +81,7 @@ def test_live_holdout_split() -> None:
 
 def test_third_figure_refused() -> None:
     try:
-        _cap(3)
-        raise AssertionError("cap allowed 3")
+        _cap(2)
+        raise AssertionError("cap allowed 2")
     except FigureCapError:
         pass

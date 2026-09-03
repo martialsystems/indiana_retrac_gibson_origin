@@ -84,10 +84,9 @@ Parent `5800fc3` is a statewide citation only. That lock’s Gibson row used a s
 
 ## Figures
 
-Two, and only two.
+One figure file. Two panels.
 
-1. Holdout scatter: last year and the bar vs observed tons on the intersection, 1:1 line. Caption is tons of error.
-2. Destination rank: 2023 share vs 2024 share by receiving facility.
+Holdout scatter: last year and the bar vs observed tons on the intersection, 1:1 line. Left panel is full scale. Right panel zooms to the cells below the 26-06 cluster. Caption is tons of error.
 
 ## Residuals that have to stay on the page
 

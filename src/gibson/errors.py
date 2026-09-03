@@ -18,7 +18,7 @@ class SplitError(GateError):
 
 
 class FigureCapError(GateError):
-    """This tree stops at two figures."""
+    """This tree stops at one figure file."""
 
 
 class ArchiveError(GateError):

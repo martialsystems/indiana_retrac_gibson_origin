@@ -39,7 +39,8 @@ def test_readme_opens_with_the_question() -> None:
     else:
         assert "does not reopen" in text
     assert "scatter.png" in text
-    assert "dest_rank.png" in text
+    assert "dest_rank.png" not in text
+    assert "Left: full scale" in text
     assert ".venv/bin/python -m pytest" in text
     assert "Open_the_research_console" not in text
     assert "labelColor" not in text

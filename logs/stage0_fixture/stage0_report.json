@@ -32,8 +32,7 @@
     "skill": "rmse_tons"
   },
   "figures": [
-    "scatter.png",
-    "dest_rank.png"
+    "scatter.png"
   ],
   "n_rows": 48,
   "n_train": 24,

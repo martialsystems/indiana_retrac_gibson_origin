@@ -24,8 +24,12 @@ def check_readme(text: str, live: dict[str, Any], *, repo) -> list[str]:
         errors.append("missing science lock SHA")
     if "Do not average" not in text:
         errors.append("missing do-not-average")
-    if "scatter.png" not in text or "dest_rank.png" not in text:
-        errors.append("missing two figures")
+    if "scatter.png" not in text:
+        errors.append("missing scatter figure")
+    if "dest_rank.png" in text:
+        errors.append("destination-rank figure leaked")
+    if "Left: full scale" not in text or "zoom" not in text.lower():
+        errors.append("missing scatter zoom panel")
     if "26-06 is a centroid" not in text:
         errors.append("missing residual: 26-06 is a centroid")
     if "great-circle" not in text:

@@ -13,7 +13,7 @@ QUESTION = (
 ORIGIN_KEY = "gibson"
 ORIGIN_NAME = "Gibson"
 USER_AGENT = "MartialSystemsResearch/indiana_retrac_gibson_origin"
-MAX_FIGURES = 2
+MAX_FIGURES = 1
 MILE_EPS = 1.0
 EARTH_MI = 3958.7613
 REQUIRED_CRS = "EPSG:4326"
@@ -77,13 +77,10 @@ SHEET_HOLDOUT = {
 }
 
 LIVE_SCATTER_SUBTITLE = (
-    "Gibson holdout cells. Last year vs mileage-plus-population. Tons of error."
-)
-LIVE_RANK_SUBTITLE = (
-    "2023 share versus 2024 share by receiving facility. Rank of plants."
+    "Left: full scale. Right: zoom below the 26-06 cluster. Last year vs "
+    "mileage-plus-population. Tons of error."
 )
 FIXTURE_SCATTER_SUBTITLE = "Fixture planted last-year persistence. Does not rescue live."
-FIXTURE_RANK_SUBTITLE = "Fixture destination shares. Does not rescue live."
 
 # Public README must ship these three. Omitting the third republishes the SWMD mistake.
 THREE_SENTENCES = (

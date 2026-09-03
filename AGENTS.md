@@ -8,7 +8,7 @@ The public waste family is two repos: statewide parent `indiana_retrac_last_year
 
 The extract is all reported Gibson-origin tons, including Restricted Waste Site Type I at 26-06. A filtered MSW object is a new question, new bar, new n, a new git. Parent `5800fc3` stays unfiltered.
 
-Contestant is last year, same quarter. Bar is origin population over great-circle miles, J restricted to Gibson train-era destinations. Origin population cancels. Confirmation 2025 is out of train and out of J. The science lock is the public IDEM quarterly XLSX, not `app.re-trac.com`. Empty XLSX, unmatched origin county, missing facility coordinates, or missing CRS stop (`run_live.py` exit 2). Stage 0 fixture before live. Two figures max.
+Contestant is last year, same quarter. Bar is origin population over great-circle miles, J restricted to Gibson train-era destinations. Origin population cancels. Confirmation 2025 is out of train and out of J. The science lock is the public IDEM quarterly XLSX, not `app.re-trac.com`. Empty XLSX, unmatched origin county, missing facility coordinates, or missing CRS stop (`run_live.py` exit 2). Stage 0 fixture before live. One figure: holdout scatter, full scale plus zoom.
 
 Science lock `c89de5b`. Confirmation 2025 stays out. Do not re-run live onto `logs/in_live`.
 

@@ -1,5 +1,5 @@
 # Copyright (c) 2026 Martial Systems LLC
-"""Stage 0 fixture. Live fetch-or-stop. Two figures. Last year vs inverse-miles."""
+"""Stage 0 fixture. Live fetch-or-stop. One figure. Last year vs inverse-miles."""
 
 from __future__ import annotations
 
