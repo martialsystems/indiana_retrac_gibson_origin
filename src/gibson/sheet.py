@@ -363,16 +363,6 @@ def write_sheet(dest: Path, *, report: dict[str, Any], log_dir: Path) -> Path:
             )
         )
 
-    story.append(Paragraph("Revisions", h2))
-    story.append(Paragraph("2026-09-03: first Gibson origin sheet from public IDEM waste-received XLSX.", small))
-    if not fixture:
-        story.append(
-            Paragraph(
-                "2026-09-03: buyer packet cover (who, two answers, plants, how to read, missing, source) and CSV.",
-                small,
-            )
-        )
-
     doc = SimpleDocTemplate(
         str(dest),
         pagesize=landscape(letter),

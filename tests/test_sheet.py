@@ -35,6 +35,7 @@ def test_buyer_pdf_has_cover_and_rows() -> None:
     assert "Gibson 2024 reported cells" in text
     assert "Figure 1" in text
     assert "Figure 2" in text
+    assert "Revisions" not in text
     assert "\u2014" not in text
     assert "What it is not" not in text
     assert "tip fee" not in text.lower()
