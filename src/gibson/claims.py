@@ -21,7 +21,7 @@ _BANS: tuple[tuple[str, re.Pattern[str]], ...] = (
     ("climate_attr", re.compile(r"climate change|global warming|anthropogenic", re.I)),
     ("pop_at_risk", re.compile(r"population at risk|people at risk|at-risk population", re.I)),
     ("logistics_opt", re.compile(r"logistics optimized|optimized logistics", re.I)),
-    ("truck_routing", re.compile(r"truck routing|\bhauling route\b", re.I)),
+    ("truck_routing", re.compile(r"(?<!\bnot )truck routing|\bhauling route\b", re.I)),
     ("next_year_forecast", re.compile(r"next[- ]year forecast|\bGibson will\b", re.I)),
 )
 

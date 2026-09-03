@@ -6,7 +6,7 @@ Sheet lock `c89de5b`. Two answers. Last year wins Gibson assignment. Last year l
 
 Parent `5800fc3` ([indiana_retrac_last_year](https://github.com/martialsystems/indiana_retrac_last_year)) is the statewide baseline citation only. Maps lane writeup: https://gist.github.com/martialsystems/16584e78d079666f7e8994b4cc6158be. That lock: last year wins assignment on intersection cells (RMSE 6504.7 vs 16633.0, n=4370); last year loses origin-quarter totals (23313.3 vs 0.0, bar scaled to the observed county total). That lock’s Gibson row used statewide facility set J: last-year RMSE 15597 vs bar 76281; holdout tons 1540946; n=35. This tree does not restamp `5800fc3` and does not promote a statewide win. Facility set J here is the 21 train-era Gibson destinations. 18 of the Gibson destination set sit on IndianaMap points; 9 use the host-county centroid. CRS is EPSG:4326, warp none.
 
-The buyer packet is `delivery/gibson_origin_2024_sheet.pdf`, `delivery/gibson_origin_2024_cells.csv`, and `delivery/cover_email.txt`. County rows are on the PDF and CSV. They are not this README. Private. All rights reserved.
+The buyer packet is `delivery/gibson_origin_2024_sheet.pdf`, `delivery/gibson_origin_2024_cells.csv`, `delivery/cover_letter.txt`, and `delivery/cover_email.txt`. County rows are on the PDF and CSV. They are not this README. Private. All rights reserved.
 
 Science lock: public IDEM waste-received XLSX 2021 through 2025 (`e4a8ece1b09c…`). Not a live Re-TRAC login. Train: 2021 Q1 through 2023 Q4. Holdout: 2024. Confirmation 2025 is out of train and out of J. 31965 out-of-state source rows dropped from the lead.
 
@@ -42,8 +42,9 @@ Empty IDEM XLSX, unmatched origin county, missing facility coordinates, or missi
 | [CHECKLIST.md](CHECKLIST.md) | Operator list |
 | `src/gibson/` | XLSX join, inverse-miles bar, last year, buyer sheet |
 | `gibsonforge/` | GraphForge tripwire |
-| `delivery/gibson_origin_2024_sheet.pdf` | Buyer PDF: who, two answers, plants, table, two figures |
+| `delivery/gibson_origin_2024_sheet.pdf` | Buyer PDF: director page 1, 48-row table, two figures |
 | `delivery/gibson_origin_2024_cells.csv` | Same 48 rows, same columns, for sorting |
-| `delivery/cover_email.txt` | Five-line cover |
+| `delivery/cover_letter.txt` | Full cover letter |
+| `delivery/cover_email.txt` | Five-line note |
 
 Research index: https://gist.github.com/martialsystems/66b896b0a4a0b8cba2b478aef64312f3

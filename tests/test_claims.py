@@ -15,6 +15,7 @@ def test_allowed_and_banned() -> None:
     assert "pop_at_risk" in scan_text("population at risk in the floodplain")
     assert "logistics_opt" in scan_text("logistics optimized for Gibson")
     assert "truck_routing" in scan_text("truck routing to the plant")
+    assert "truck_routing" not in scan_text("inverse-miles, not truck routing")
     assert "next_year_forecast" in scan_text("next-year forecast of Gibson tons")
     with pytest.raises(ClaimBanError):
         require_clean("will get 12 tons next quarter", source="t")
