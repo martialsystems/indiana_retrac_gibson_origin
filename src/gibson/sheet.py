@@ -117,29 +117,34 @@ def packet_copy(report: dict[str, Any]) -> dict[str, str]:
     ot = hold["origin_total"]
     n_j = int(report.get("n_facilities_j") or 21)
     what = (
-        "What this is. Gibson County origin tons in 2024 versus the same quarter in 2023. "
-        "Destinations as reported to IDEM. One county. Not next year."
+        "What this is. All reported Gibson-origin tons in 2024 versus the same quarter in 2023, "
+        "as filed with IDEM. Permit 26-06 is Restricted Waste Site Type I at Gibson Generating "
+        "Station South Landfill: on-site CCR and related industrial tons, not MSW. That door is "
+        "97.8% of the file. One origin. Held-out 2024."
     )
     happened = (
-        "What happened. Almost all of it stayed at one plant. Gibson Generating Station "
-        "RWS 1 South Landfill took 97.7% in 2023 and 97.8% in 2024. Blackfoot is the only "
-        "other plant above 1%. New in 2024: Warrick Processing Center (Q2, 833 tons). "
-        "Gone in 2024 (had Gibson tons in 2023, none in 2024): Bicknell Yard - Mullins Supply, "
-        "Caldwell Environmental, Hoosier Landfill 2, EQ Industrial Services."
+        "What happened. 97.7% in 2023 and 97.8% in 2024 stayed on site at 26-06. The Q3 residual "
+        "of +83,255 tons is more restricted-waste output at that landfill. Blackfoot (Pike County) "
+        "is the largest remaining door, about 20,000 tons in 2024. Velpen C&D, Laubscher, "
+        "Evansville Transfer, and Covanta follow. New in 2024 among the small remainder: "
+        "Warrick Processing Center (Q2, 833 tons). Gone in 2024 (had Gibson tons in 2023, none "
+        "in 2024): Bicknell Yard - Mullins Supply, Caldwell Environmental, Hoosier Landfill 2, "
+        "EQ Industrial Services."
     )
     answers = (
-        "Two answers, not averaged. Plants: last year beats inverse-miles on the 35 cells "
-        f"where 2023 exists (RMSE {ly:,.1f} vs {bar:,.1f} tons). The bar is inverse-miles "
-        f"among the {n_j} Gibson train destinations, not truck routing. County total: last year "
+        "Two answers, not averaged, on all reported tons including RWS Type I. Plants: last year "
+        f"beats inverse-miles on the 35 cells where 2023 exists (RMSE {ly:,.1f} vs {bar:,.1f} tons). "
+        f"The bar is inverse-miles among the {n_j} Gibson train destinations, not truck routing. "
+        "It puts 72.43% on 26-06; actual is about 98%; last year copies 98%. County total: last year "
         f"misses the four 2024 quarter totals (RMSE {float(ot['last_year_rmse']):,.1f}). "
         "The miles bar is scaled to each quarter’s observed total, so its total error is zero "
         "by construction."
     )
     how = (
         "How to read a row. 2023 tons, 2023 share of that quarter, 2024 tons, 2024 share, "
-        "residual. Residual = 2024 tons − 2023 same-quarter tons at that plant. It is not "
-        "last year’s share applied to this year’s total. Q3 at 26-06 is +83,255 because the "
-        "quarter got bigger, not because the share moved."
+        "residual. Residual = 2024 tons - 2023 same-quarter tons at that plant. It is not "
+        "last year’s share applied to this year’s total. Q3 at 26-06 is +83,255 because "
+        "restricted-waste tons at that site rose, not because a county MSW share moved."
     )
     # Unicode minus in residual formula trips nothing; punctuation rule prefers ASCII.
     how = how.replace(" − ", " - ")
@@ -167,11 +172,11 @@ def packet_copy(report: dict[str, Any]) -> dict[str, str]:
 
 def cover_email_text() -> str:
     lines = [
-        "Gibson 2024 vs 2023 same-quarter destinations.",
-        "97.8% stayed at Gibson Generating Station RWS 1 South Landfill.",
-        "Last year picks that plant better than miles. Last year does not pick this year’s tonnage.",
-        "Table + CSV attached.",
-        "Price is the sheet, not a subscription unless you ask.",
+        "All reported Gibson-origin tons, 2024 vs 2023 same quarter.",
+        "97.8% is Restricted Waste Site Type I at Gibson Generating Station South Landfill.",
+        "Last year beats miles on that door. Last year misses the quarterly total.",
+        "Do not send this PDF to the county SWMD. A filtered MSW/C&D sheet would be a new question.",
+        "Sheet lock c89de5b. Arithmetic stands. The customer was wrong.",
     ]
     text = "\n".join(lines) + "\n"
     require_clean(text, source="cover_email")
@@ -183,46 +188,41 @@ def cover_letter_text() -> str:
         "Martial Systems LLC\n"
         "2026-09-03\n"
         "\n"
-        "Gibson County Solid Waste Management District\n"
-        "Attn: Binhack\n"
-        "gcsw@gibsoncounty-in.gov\n"
+        "Operator memo. Do not send to Gibson County Solid Waste Management District.\n"
         "\n"
-        "Re: Gibson origin tons, 2024 versus 2023 same quarter\n"
+        "Re: Gibson origin Re-TRAC extract (all reported tons), sheet lock c89de5b\n"
         "\n"
-        "This packet is one county’s reported destinations for 2024, set next to the same "
-        "quarter in 2023. It is a join of the public IDEM quarterly waste-received file. "
-        "It is not next year, not a statewide model, and not a stamped PE opinion.\n"
+        "The join is internally consistent. Origin = Gibson on the public IDEM quarterly "
+        "waste-received file includes on-site restricted waste at permit 26-06, Gibson "
+        "Generating Station South Landfill, Restricted Waste Site Type I. That door is 97.8% "
+        "of 2024 Gibson-origin tons (97.7% in 2023). Parent lock 5800fc3 and this sheet lock "
+        "scored all reported tons. They never said MSW-only.\n"
         "\n"
-        "Almost all of the tons stayed at one door. Gibson Generating Station RWS 1 South "
-        "Landfill (ID 26-06) took 97.7% in 2023 and 97.8% in 2024. Blackfoot is the only "
-        "other plant above 1%. Warrick Processing Center is new in 2024 (Q2, 833 tons). "
-        "Bicknell Yard - Mullins Supply, Caldwell Environmental, Hoosier Landfill 2, and "
-        "EQ Industrial Services had Gibson tons in 2023 and none in 2024. Those four names "
-        "are on this letter and on page 1 of the sheet. They are not in the 48 2024 rows, "
-        "because they had no 2024 Gibson cell to report.\n"
+        "The mismatch is the customer. Binhack does not dispatch, budget, or take 26-06 CCR "
+        "and FGD solids to the district board. The Q3 residual of +83,255 tons at 26-06 is "
+        "plant output, not a fuller MSW day in Princeton. Do not email this PDF to "
+        "gcsw@gibsoncounty-in.gov as Gibson County waste. Do not call the 98% persistence "
+        "a district finding.\n"
         "\n"
-        "Two answers, not averaged. On the 35 origin-facility-quarter cells where 2023 "
-        "exists, last year beats inverse-miles (RMSE 15,596.8 vs 35,014.7 tons). Inverse-miles "
-        "is spread across the 21 Gibson train destinations; it is not truck routing. It puts "
-        "72.43% of each quarter on 26-06. Actual is about 98%. Last year copies 98%. That is "
-        "why last year wins the plant assignment, and why the win is almost mechanical: most "
-        "of the county already stays at the generating-station landfill; last year knows that; "
-        "miles spread it around. On the four 2024 quarter totals, last year misses (RMSE "
-        "45,939.1). The miles bar is scaled to each quarter’s observed total, so its total "
-        "error is zero by construction.\n"
+        "Two answers, not averaged, on all reported tons. On the 35 cells where 2023 exists, "
+        "last year beats inverse-miles (RMSE 15,596.8 vs 35,014.7 tons). Inverse-miles among "
+        "the 21 Gibson train destinations puts 72.43% on 26-06; actual is about 98%; last year "
+        "copies 98%. That win is real and almost mechanical for on-site RWS, not a SWMD routing "
+        "result. On the four 2024 quarter totals, last year misses (RMSE 45,939.1). The miles "
+        "bar is scaled to each quarter’s observed total, so its total error is zero by "
+        "construction.\n"
         "\n"
-        "How to read a row: 2023 tons, 2023 share of that quarter, 2024 tons, 2024 share, "
-        "residual. Residual is 2024 tons minus 2023 same-quarter tons at that plant. It is "
-        "not last year’s share applied to this year’s total. Q3 at 26-06 is +83,255 because "
-        "the quarter got bigger, not because the share moved.\n"
+        "What remains if 26-06 is dropped is about 2% of the tons: Blackfoot (MSW, Pike County, "
+        "on the order of 5,000 tons a quarter), then Velpen C&D, Laubscher, Evansville Transfer, "
+        "Covanta, and dust. That set would be a new object: Gibson-origin tons excluding RWS "
+        "Type I, or MSW + transfer + C&D only. New question, new bar, new n. Do not sneak it "
+        "into c89de5b. Parent 5800fc3 stays unfiltered and frozen.\n"
         "\n"
-        "Loc is point or centroid. Centroid means the host-county centroid, not a surveyed "
-        "gate. 26-06, the 98% plant, is a centroid. Miles to that site are wrong by "
-        "construction. The flag is in the Loc column.\n"
+        "Loc: 26-06 is a host-county centroid. Miles to that site are wrong by construction. "
+        "The 48-row table is all 2024 reported Gibson-origin cells, including RWS. Residual is "
+        "2024 tons minus 2023 same-quarter tons at that plant.\n"
         "\n"
-        "Attached: the four-page sheet, and a CSV of the same 48 rows. The 0.1-ton rows are "
-        "in the table because they are in the file. Price is the sheet, not a subscription "
-        "unless you ask.\n"
+        "Packet files stay in delivery/ for the extract. Do not send them to gcsw@.\n"
         "\n"
         "Martial Systems LLC\n"
     )
@@ -433,9 +433,9 @@ def write_sheet(dest: Path, *, report: dict[str, Any], log_dir: Path) -> Path:
         story.append(Image(str(scatter), width=img_w, height=img_w * 0.92, hAlign="CENTER"))
         story.append(
             Paragraph(
-                "Figure 1. Observed 2024 tons versus last year (orange) and inverse-miles (blue). "
-                "The four points on the right are 26-06. Last year tracks that plant; miles sit low "
-                "because they spread 27% of the bar to other doors.",
+                "Figure 1. Observed 2024 tons versus last year (orange) and inverse-miles (grey-blue). "
+                "The four points on the right are 26-06, Restricted Waste Site Type I. Last year tracks "
+                "that on-site door; miles sit low because they spread 27% of the bar to other doors.",
                 small,
             )
         )

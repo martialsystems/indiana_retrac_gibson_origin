@@ -1,22 +1,20 @@
 Martial Systems LLC
 2026-09-03
 
-Gibson County Solid Waste Management District
-Attn: Binhack
-gcsw@gibsoncounty-in.gov
+Operator memo. Do not send to Gibson County Solid Waste Management District.
 
-Re: Gibson origin tons, 2024 versus 2023 same quarter
+Re: Gibson origin Re-TRAC extract (all reported tons), sheet lock c89de5b
 
-This packet is one county’s reported destinations for 2024, set next to the same quarter in 2023. It is a join of the public IDEM quarterly waste-received file. It is not next year, not a statewide model, and not a stamped PE opinion.
+The join is internally consistent. Origin = Gibson on the public IDEM quarterly waste-received file includes on-site restricted waste at permit 26-06, Gibson Generating Station South Landfill, Restricted Waste Site Type I. That door is 97.8% of 2024 Gibson-origin tons (97.7% in 2023). Parent lock 5800fc3 and this sheet lock scored all reported tons. They never said MSW-only.
 
-Almost all of the tons stayed at one door. Gibson Generating Station RWS 1 South Landfill (ID 26-06) took 97.7% in 2023 and 97.8% in 2024. Blackfoot is the only other plant above 1%. Warrick Processing Center is new in 2024 (Q2, 833 tons). Bicknell Yard - Mullins Supply, Caldwell Environmental, Hoosier Landfill 2, and EQ Industrial Services had Gibson tons in 2023 and none in 2024. Those four names are on this letter and on page 1 of the sheet. They are not in the 48 2024 rows, because they had no 2024 Gibson cell to report.
+The mismatch is the customer. Binhack does not dispatch, budget, or take 26-06 CCR and FGD solids to the district board. The Q3 residual of +83,255 tons at 26-06 is plant output, not a fuller MSW day in Princeton. Do not email this PDF to gcsw@gibsoncounty-in.gov as Gibson County waste. Do not call the 98% persistence a district finding.
 
-Two answers, not averaged. On the 35 origin-facility-quarter cells where 2023 exists, last year beats inverse-miles (RMSE 15,596.8 vs 35,014.7 tons). Inverse-miles is spread across the 21 Gibson train destinations; it is not truck routing. It puts 72.43% of each quarter on 26-06. Actual is about 98%. Last year copies 98%. That is why last year wins the plant assignment, and why the win is almost mechanical: most of the county already stays at the generating-station landfill; last year knows that; miles spread it around. On the four 2024 quarter totals, last year misses (RMSE 45,939.1). The miles bar is scaled to each quarter’s observed total, so its total error is zero by construction.
+Two answers, not averaged, on all reported tons. On the 35 cells where 2023 exists, last year beats inverse-miles (RMSE 15,596.8 vs 35,014.7 tons). Inverse-miles among the 21 Gibson train destinations puts 72.43% on 26-06; actual is about 98%; last year copies 98%. That win is real and almost mechanical for on-site RWS, not a SWMD routing result. On the four 2024 quarter totals, last year misses (RMSE 45,939.1). The miles bar is scaled to each quarter’s observed total, so its total error is zero by construction.
 
-How to read a row: 2023 tons, 2023 share of that quarter, 2024 tons, 2024 share, residual. Residual is 2024 tons minus 2023 same-quarter tons at that plant. It is not last year’s share applied to this year’s total. Q3 at 26-06 is +83,255 because the quarter got bigger, not because the share moved.
+What remains if 26-06 is dropped is about 2% of the tons: Blackfoot (MSW, Pike County, on the order of 5,000 tons a quarter), then Velpen C&D, Laubscher, Evansville Transfer, Covanta, and dust. That set would be a new object: Gibson-origin tons excluding RWS Type I, or MSW + transfer + C&D only. New question, new bar, new n. Do not sneak it into c89de5b. Parent 5800fc3 stays unfiltered and frozen.
 
-Loc is point or centroid. Centroid means the host-county centroid, not a surveyed gate. 26-06, the 98% plant, is a centroid. Miles to that site are wrong by construction. The flag is in the Loc column.
+Loc: 26-06 is a host-county centroid. Miles to that site are wrong by construction. The 48-row table is all 2024 reported Gibson-origin cells, including RWS. Residual is 2024 tons minus 2023 same-quarter tons at that plant.
 
-Attached: the four-page sheet, and a CSV of the same 48 rows. The 0.1-ton rows are in the table because they are in the file. Price is the sheet, not a subscription unless you ask.
+Packet files stay in delivery/ for the extract. Do not send them to gcsw@.
 
 Martial Systems LLC

@@ -17,6 +17,7 @@ from gibsonforge.graphs.locks import build_graph as build_locks
 from gibsonforge.graphs.readme_no_rows import build_graph as build_readme
 from gibsonforge.graphs.stage0_before_live import build_graph as build_stage0
 from gibsonforge.graphs.two_answers import build_graph as build_two
+from gibsonforge.graphs.wrong_buyer import build_graph as build_buyer_wrong
 
 
 def require_stage0(**flags: Any) -> None:
@@ -114,6 +115,20 @@ def require_claims(**flags: Any) -> None:
     )
 
 
+def require_wrong_buyer(**flags: Any) -> None:
+    thread_id = str(flags.pop("thread_id", "gibson_buyer_wrong"))
+    state = {"addressed_to_swmd": False, "district_msw_pitch": False}
+    state.update(flags)
+    require_law(
+        build_buyer_wrong(),
+        state,
+        allow_decisions=["allow"],
+        law_id="gibson.wrong_buyer",
+        thread_id=thread_id,
+        raise_error=True,
+    )
+
+
 def require_observed(obs: dict[str, Any], *, fixture: bool, thread_id: str) -> None:
     require_two_answers(answers_averaged=obs["answers_averaged"], thread_id=f"{thread_id}.two")
     require_readme_no_rows(
@@ -142,4 +157,9 @@ def require_observed(obs: dict[str, Any], *, fixture: bool, thread_id: str) -> N
         sheet_restamped=obs["sheet_restamped"],
         overwrite_frozen_sheet=obs["overwrite_frozen_sheet"],
         thread_id=f"{thread_id}.locks",
+    )
+    require_wrong_buyer(
+        addressed_to_swmd=obs["addressed_to_swmd"],
+        district_msw_pitch=obs["district_msw_pitch"],
+        thread_id=f"{thread_id}.buyer_wrong",
     )

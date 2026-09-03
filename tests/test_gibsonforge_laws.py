@@ -23,6 +23,7 @@ from gibsonforge.gate import (
     require_readme_no_rows,
     require_stage0,
     require_two_answers,
+    require_wrong_buyer,
 )
 from gibsonforge.observe import observe
 from gibsonforge.product_laws import laws
@@ -63,12 +64,18 @@ def test_laws_allow_and_block() -> None:
         require_claims(truck_routing=True, thread_id="t.c.truck")
     with pytest.raises(LawBlockedError):
         require_claims(next_year_forecast=True, thread_id="t.c.nxt")
+    require_wrong_buyer(thread_id="t.w.ok")
+    with pytest.raises(LawBlockedError):
+        require_wrong_buyer(addressed_to_swmd=True, thread_id="t.w.swmd")
+    with pytest.raises(LawBlockedError):
+        require_wrong_buyer(district_msw_pitch=True, thread_id="t.w.pitch")
     assert {row["id"] for row in laws()} == {
         "gibson.stage0_before_live",
         "gibson.two_answers",
         "gibson.readme_no_rows",
         "gibson.buyer_pdf_only",
         "gibson.locks",
+        "gibson.wrong_buyer",
         "gibson.claim_bans",
     }
 
@@ -82,6 +89,8 @@ def test_frozen_invoice_observes_clean() -> None:
     assert obs["buyer_pdf_missing"] is False
     assert obs["parent_restamped"] is False
     assert obs["sheet_restamped"] is False
+    assert obs["addressed_to_swmd"] is False
+    assert obs["district_msw_pitch"] is False
     assert obs["sheet_lock"] == SHEET_LOCK
     assert obs["parent_lock"] == PARENT_LOCK
     require_observed(obs, fixture=False, thread_id="t.obs")

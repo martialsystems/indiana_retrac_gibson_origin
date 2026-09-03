@@ -28,6 +28,8 @@ def test_buyer_pdf_has_cover_and_rows() -> None:
     assert "35,014.7" in text
     assert "45,939.1" in text
     assert "What this is" in text
+    assert "Restricted Waste Site Type I" in flat
+    assert "not MSW" in flat
     assert "What happened" in text
     assert "Two answers, not averaged" in text
     assert "How to read a row" in text
@@ -102,10 +104,10 @@ def test_cover_email_is_five_lines() -> None:
     assert text == cover_email_text()
     lines = [ln for ln in text.splitlines() if ln]
     assert len(lines) == 5
-    assert lines[0] == "Gibson 2024 vs 2023 same-quarter destinations."
-    assert "97.8%" in lines[1]
-    assert "Gibson Generating Station" in lines[1]
-    assert "you ask" in lines[4]
+    assert "Restricted Waste Site Type I" in lines[1]
+    assert "Do not send this PDF to the county SWMD" in lines[3]
+    assert "c89de5b" in lines[4]
+    assert "Attn: Binhack" not in text
     assert "\u2014" not in text
     assert "Vermillion" not in text
 
@@ -113,13 +115,15 @@ def test_cover_email_is_five_lines() -> None:
 def test_cover_letter_is_a_letter() -> None:
     text = (REPO / "delivery" / "cover_letter.txt").read_text(encoding="utf-8")
     assert text == cover_letter_text()
-    assert "Gibson County Solid Waste Management District" in text
-    assert "Attn: Binhack" in text
+    assert "Attn: Binhack" not in text
+    assert "Do not send to Gibson County Solid Waste Management District" in text
+    assert "Restricted Waste Site Type I" in text
     assert "97.8%" in text
     assert "15,596.8" in text
     assert "35,014.7" in text
     assert "not averaged" in text
     assert "centroid" in text
+    assert "do not sneak it into c89de5b" in text.lower()
     assert "habit" not in text.lower()
     assert "logistics" not in text.lower()
     assert "safe" not in text.lower()

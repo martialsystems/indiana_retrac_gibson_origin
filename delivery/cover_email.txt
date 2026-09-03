@@ -1,5 +1,5 @@
-Gibson 2024 vs 2023 same-quarter destinations.
-97.8% stayed at Gibson Generating Station RWS 1 South Landfill.
-Last year picks that plant better than miles. Last year does not pick this year’s tonnage.
-Table + CSV attached.
-Price is the sheet, not a subscription unless you ask.
+All reported Gibson-origin tons, 2024 vs 2023 same quarter.
+97.8% is Restricted Waste Site Type I at Gibson Generating Station South Landfill.
+Last year beats miles on that door. Last year misses the quarterly total.
+Do not send this PDF to the county SWMD. A filtered MSW/C&D sheet would be a new question.
+Sheet lock c89de5b. Arithmetic stands. The customer was wrong.

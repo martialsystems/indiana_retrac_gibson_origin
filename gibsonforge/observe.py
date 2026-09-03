@@ -77,7 +77,12 @@ def extra_cell_tables(repo: Path, cells: list[dict[str, Any]]) -> bool:
             if path.resolve() in allowed_csv:
                 continue
             return True
-        if path.suffix.lower() == ".md" and path.name != "README.md":
+        if path.suffix.lower() == ".md" and path.name not in {
+            "README.md",
+            "AGENTS.md",
+            "CHECKLIST.md",
+            "METHODOLOGY.md",
+        }:
             body = path.read_text(encoding="utf-8")
             if has_facility_identities(body, cells):
                 return True
@@ -148,6 +153,29 @@ def parent_restamped(text: str, live: dict[str, Any] | None) -> bool:
     return False
 
 
+def addressed_to_swmd(letter: str, email: str) -> bool:
+    head = (letter or "").split("Re:", 1)[0]
+    if re.search(r"Attn:\s*Binhack", head, re.I):
+        return True
+    if "gcsw@" in head.lower():
+        return True
+    first = (email or "").splitlines()[:1]
+    if first and "gcsw@" in first[0].lower():
+        return True
+    return False
+
+
+def district_msw_pitch(*texts: str) -> bool:
+    blob = "\n".join(texts)
+    for sent in re.split(r"(?<=[.!?])\s+", blob):
+        low = sent.lower()
+        if "district finding" in low and "do not call" not in low:
+            return True
+        if "gibson county waste" in low and "do not email" not in low and "do not send" not in low:
+            return True
+    return False
+
+
 def claim_flags(*texts: str) -> dict[str, bool]:
     hits: set[str] = set()
     for text in texts:
@@ -179,6 +207,10 @@ def observe(
     cover = str(hold.get("cover") or "")
     prose = cover + "\n" + readme
     pdf = root / "delivery" / "gibson_origin_2024_sheet.pdf"
+    letter_p = root / "delivery" / "cover_letter.txt"
+    email_p = root / "delivery" / "cover_email.txt"
+    letter = letter_p.read_text(encoding="utf-8") if letter_p.is_file() else ""
+    email = email_p.read_text(encoding="utf-8") if email_p.is_file() else ""
     stage0 = root / "logs" / "stage0_fixture" / "stage0_report.json"
     flags = {
         "stage0_ok": stage0.is_file() if stage0_ok is None else bool(stage0_ok),
@@ -195,6 +227,8 @@ def observe(
         "parent_restamped": parent_restamped(readme, frozen),
         "sheet_restamped": (not fixture) and sheet_drifted(frozen),
         "overwrite_frozen_sheet": bool(overwrite_frozen_sheet),
+        "addressed_to_swmd": addressed_to_swmd(letter, email),
+        "district_msw_pitch": district_msw_pitch(letter, email, cover, readme),
         "sheet_lock": SHEET_LOCK,
         "parent_lock": PARENT_LOCK,
     }

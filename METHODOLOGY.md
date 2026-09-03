@@ -6,7 +6,7 @@ Question: On Gibson origin-facility-quarter cells, do last year’s same-quarter
 
 Rows: Gibson origin × receiving facility × calendar quarter.
 
-Tons: sum of Municipal Solid Waste, Construction/Demolition, Foundry, Coal Ash, Flue Gas Desulfurization Waste, Other Non-Municipal, and Alternate Daily Cover/Reuse received that quarter from Gibson County. Types stay pooled.
+Tons: sum of Municipal Solid Waste, Construction/Demolition, Foundry, Coal Ash, Flue Gas Desulfurization Waste, Other Non-Municipal, and Alternate Daily Cover/Reuse received that quarter from Gibson County. Types stay pooled. On-site Restricted Waste Site Type I at the generating-station landfill is in that pool. A filtered MSW/C&D object, dropping RWS Type I, is a new question and a new lock.
 
 Out-of-state origin is dropped. Unmatched county names fail closed. The join is the same public IDEM XLSX join as parent `5800fc3`, then restricted to origin = Gibson.
 

@@ -8,6 +8,7 @@ Laws that refuse:
 - Two answers averaged or flattened into one win
 - README ships Gibson county rows
 - A Gibson cell table outside the buyer packet (PDF plus one delivery CSV)
+- Addressed to the county SWMD, or sold as a district MSW finding
 - Parent `5800fc3` restamped, or sheet lock `c89de5b` refreshed
 - Claim bans: casualties, climate attribution, population-at-risk, logistics optimized, truck routing, next-year Gibson total
 

@@ -13,6 +13,7 @@ def laws() -> list[dict[str, Any]]:
     from gibsonforge.graphs.readme_no_rows import build_graph as readme_no_rows
     from gibsonforge.graphs.stage0_before_live import build_graph as stage0_before_live
     from gibsonforge.graphs.two_answers import build_graph as two_answers
+    from gibsonforge.graphs.wrong_buyer import build_graph as wrong_buyer
 
     return [
         {
@@ -47,6 +48,12 @@ def laws() -> list[dict[str, Any]]:
                 "sheet_restamped": False,
                 "overwrite_frozen_sheet": False,
             },
+            "allow_decisions": ["allow"],
+        },
+        {
+            "id": "gibson.wrong_buyer",
+            "build": wrong_buyer,
+            "state": {"addressed_to_swmd": False, "district_msw_pitch": False},
             "allow_decisions": ["allow"],
         },
         {
