@@ -1,4 +1,4 @@
-# Copyright (c) 2026 Martial Systems LLC. All rights reserved.
+# Copyright (c) 2026 Martial Systems LLC
 """IDEM quarterly waste-received XLSX. All types pooled. Indiana origin only."""
 
 from __future__ import annotations

@@ -1,4 +1,4 @@
-# Copyright (c) 2026 Martial Systems LLC. All rights reserved.
+# Copyright (c) 2026 Martial Systems LLC
 """Great-circle miles. Road miles is a sequel. CRS is fail-closed."""
 
 from __future__ import annotations

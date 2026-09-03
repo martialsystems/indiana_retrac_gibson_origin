@@ -1,5 +1,5 @@
-# Copyright (c) 2026 Martial Systems LLC. All rights reserved.
-"""Invoice claim bans. Other scanners stay on pytest."""
+# Copyright (c) 2026 Martial Systems LLC
+"""Research claim bans. Other scanners stay on pytest."""
 
 from __future__ import annotations
 

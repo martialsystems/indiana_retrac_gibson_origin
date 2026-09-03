@@ -1,4 +1,4 @@
-# Copyright (c) 2026 Martial Systems LLC. All rights reserved.
+# Copyright (c) 2026 Martial Systems LLC
 """Refuse laws. Verify-before-done is the finish gate."""
 
 from __future__ import annotations
@@ -7,13 +7,11 @@ from typing import Any
 
 
 def laws() -> list[dict[str, Any]]:
-    from gibsonforge.graphs.buyer_pdf_only import build_graph as buyer_pdf_only
     from gibsonforge.graphs.claim_bans import build_graph as claim_bans
     from gibsonforge.graphs.locks import build_graph as locks
-    from gibsonforge.graphs.readme_no_rows import build_graph as readme_no_rows
+    from gibsonforge.graphs.rws_disclosure import build_graph as rws_disclosure
     from gibsonforge.graphs.stage0_before_live import build_graph as stage0_before_live
     from gibsonforge.graphs.two_answers import build_graph as two_answers
-    from gibsonforge.graphs.wrong_buyer import build_graph as wrong_buyer
 
     return [
         {
@@ -29,15 +27,9 @@ def laws() -> list[dict[str, Any]]:
             "allow_decisions": ["allow"],
         },
         {
-            "id": "gibson.readme_no_rows",
-            "build": readme_no_rows,
-            "state": {"readme_has_county_rows": False},
-            "allow_decisions": ["allow"],
-        },
-        {
-            "id": "gibson.buyer_pdf_only",
-            "build": buyer_pdf_only,
-            "state": {"gibson_table_outside_pdf": False, "buyer_pdf_missing": False},
+            "id": "gibson.rws_disclosure",
+            "build": rws_disclosure,
+            "state": {"rws_missing": False},
             "allow_decisions": ["allow"],
         },
         {
@@ -48,12 +40,6 @@ def laws() -> list[dict[str, Any]]:
                 "sheet_restamped": False,
                 "overwrite_frozen_sheet": False,
             },
-            "allow_decisions": ["allow"],
-        },
-        {
-            "id": "gibson.wrong_buyer",
-            "build": wrong_buyer,
-            "state": {"addressed_to_swmd": False, "district_msw_pitch": False},
             "allow_decisions": ["allow"],
         },
         {

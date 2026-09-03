@@ -1,4 +1,4 @@
-# Copyright (c) 2026 Martial Systems LLC. All rights reserved.
+# Copyright (c) 2026 Martial Systems LLC
 """Temporal split. Confirmation is out of train and out of facility set J."""
 
 from __future__ import annotations

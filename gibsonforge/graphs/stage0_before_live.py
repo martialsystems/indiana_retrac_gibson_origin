@@ -1,4 +1,4 @@
-# Copyright (c) 2026 Martial Systems LLC. All rights reserved.
+# Copyright (c) 2026 Martial Systems LLC
 """Stage 0 fixture must exist before live."""
 
 from __future__ import annotations

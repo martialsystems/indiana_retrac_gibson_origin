@@ -1,10 +1,9 @@
-# Copyright (c) 2026 Martial Systems LLC. All rights reserved.
-"""Read the invoice surfaces. GraphForge consumes the flags, not the RMSE theater."""
+# Copyright (c) 2026 Martial Systems LLC
+"""Read the research surfaces. GraphForge consumes the flags, not the RMSE theater."""
 
 from __future__ import annotations
 
 import json
-import re
 from pathlib import Path
 from typing import Any
 
@@ -15,8 +14,8 @@ from gibson.config import (
     REPO_ROOT,
     SHEET_HOLDOUT,
     SHEET_LOCK,
+    THREE_SENTENCES,
 )
-from gibson.sheet import PACKET_CSV
 
 _CLAIM_FLAGS = (
     "casualty",
@@ -27,66 +26,13 @@ _CLAIM_FLAGS = (
     "next_year_forecast",
 )
 
+
 def _cells(live: dict[str, Any] | None) -> list[dict[str, Any]]:
     if not live:
         return []
     hold = live.get("holdout") or {}
     rows = hold.get("cells") or []
     return [r for r in rows if isinstance(r, dict)]
-
-
-def has_facility_identities(text: str, cells: list[dict[str, Any]]) -> bool:
-    for cell in cells:
-        name = str(cell.get("facility_name") or "")
-        fid = str(cell.get("facility_id") or "")
-        if name and name in text:
-            return True
-        if fid and re.search(rf"\b{re.escape(fid)}\b", text):
-            return True
-    return False
-
-
-def readme_has_county_rows(text: str, cells: list[dict[str, Any]]) -> bool:
-    if has_facility_identities(text, cells):
-        return True
-    if re.search(r"Gibson 2024 reported cells", text) and "|" in text and "2024 tons" in text:
-        return True
-    return False
-
-
-def extra_cell_tables(repo: Path, cells: list[dict[str, Any]]) -> bool:
-    skip = {".venv", ".git", "__pycache__", ".pytest_cache"}
-
-    def _files():
-        for child in repo.iterdir():
-            if child.name in skip:
-                continue
-            if child.is_file():
-                yield child
-                continue
-            if child.is_dir():
-                for path in child.rglob("*"):
-                    if any(part in skip for part in path.parts):
-                        continue
-                    if path.is_file():
-                        yield path
-
-    allowed_csv = {(repo / "delivery" / PACKET_CSV).resolve()}
-    for path in _files():
-        if path.suffix.lower() == ".csv":
-            if path.resolve() in allowed_csv:
-                continue
-            return True
-        if path.suffix.lower() == ".md" and path.name not in {
-            "README.md",
-            "AGENTS.md",
-            "CHECKLIST.md",
-            "METHODOLOGY.md",
-        }:
-            body = path.read_text(encoding="utf-8")
-            if has_facility_identities(body, cells):
-                return True
-    return False
 
 
 def answers_averaged(hold: dict[str, Any], beats: bool, prose: str) -> bool:
@@ -153,27 +99,8 @@ def parent_restamped(text: str, live: dict[str, Any] | None) -> bool:
     return False
 
 
-def addressed_to_swmd(letter: str, email: str) -> bool:
-    head = (letter or "").split("Re:", 1)[0]
-    if re.search(r"Attn:\s*Binhack", head, re.I):
-        return True
-    if "gcsw@" in head.lower():
-        return True
-    first = (email or "").splitlines()[:1]
-    if first and "gcsw@" in first[0].lower():
-        return True
-    return False
-
-
-def district_msw_pitch(*texts: str) -> bool:
-    blob = "\n".join(texts)
-    for sent in re.split(r"(?<=[.!?])\s+", blob):
-        low = sent.lower()
-        if "district finding" in low and "do not call" not in low:
-            return True
-        if "gibson county waste" in low and "do not email" not in low and "do not send" not in low:
-            return True
-    return False
+def rws_missing(text: str) -> bool:
+    return any(sentence not in (text or "") for sentence in THREE_SENTENCES)
 
 
 def claim_flags(*texts: str) -> dict[str, bool]:
@@ -206,11 +133,6 @@ def observe(
     hold = (frozen or {}).get("holdout") or {}
     cover = str(hold.get("cover") or "")
     prose = cover + "\n" + readme
-    pdf = root / "delivery" / "gibson_origin_2024_sheet.pdf"
-    letter_p = root / "delivery" / "cover_letter.txt"
-    email_p = root / "delivery" / "cover_email.txt"
-    letter = letter_p.read_text(encoding="utf-8") if letter_p.is_file() else ""
-    email = email_p.read_text(encoding="utf-8") if email_p.is_file() else ""
     stage0 = root / "logs" / "stage0_fixture" / "stage0_report.json"
     flags = {
         "stage0_ok": stage0.is_file() if stage0_ok is None else bool(stage0_ok),
@@ -221,14 +143,11 @@ def observe(
         )
         if hold
         else (not fixture),
-        "readme_has_county_rows": readme_has_county_rows(readme, cells),
-        "gibson_table_outside_pdf": extra_cell_tables(root, cells) or readme_has_county_rows(readme, cells),
-        "buyer_pdf_missing": (not fixture) and (not pdf.is_file()),
+        "rws_missing": rws_missing(readme),
         "parent_restamped": parent_restamped(readme, frozen),
         "sheet_restamped": (not fixture) and sheet_drifted(frozen),
         "overwrite_frozen_sheet": bool(overwrite_frozen_sheet),
-        "addressed_to_swmd": addressed_to_swmd(letter, email),
-        "district_msw_pitch": district_msw_pitch(letter, email, cover, readme),
+        "n_cells": len(cells),
         "sheet_lock": SHEET_LOCK,
         "parent_lock": PARENT_LOCK,
     }

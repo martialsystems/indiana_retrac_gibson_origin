@@ -1,5 +1,5 @@
-# Copyright (c) 2026 Martial Systems LLC. All rights reserved.
-"""Stage 0 fixture. Live fetch-or-stop. Two figures. Buyer PDF from JSON."""
+# Copyright (c) 2026 Martial Systems LLC
+"""Stage 0 fixture. Live fetch-or-stop. Two figures. Last year vs inverse-miles."""
 
 from __future__ import annotations
 
@@ -13,7 +13,6 @@ from gibson.errors import StageOrderError
 from gibson.fetch import fetch_live
 from gibson.figure import write_two
 from gibson.fixture import build_fixture
-from gibson.sheet import write_sheet
 from gibson.skill import score
 from gibson.split import assert_split
 from gibsonforge.gate import require_observed, require_two_answers
@@ -43,7 +42,6 @@ def _run(
     facilities: dict[str, dict[str, Any]],
     fixture: bool,
     extra: dict[str, Any] | None = None,
-    buyer: bool = False,
 ) -> dict[str, Any]:
     require_clean(QUESTION, source="question")
     fit = score(rows, counties=counties, facilities=facilities)
@@ -119,17 +117,6 @@ def _run(
     }
     if extra:
         report.update(extra)
-    sheet_name = "fixture_sheet.pdf" if fixture else "gibson_origin_2024_sheet.pdf"
-    sheet_path = write_sheet(log_dir / sheet_name, report=report, log_dir=log_dir)
-    report["sheet"] = sheet_path.name
-    if buyer and not fixture:
-        delivery = REPO_ROOT / "delivery" / sheet_path.name
-        if delivery.is_file():
-            obs_del = observe(REPO_ROOT, fixture=False, overwrite_frozen_sheet=True)
-            require_observed(obs_del, fixture=False, thread_id="delivery")
-        delivery.parent.mkdir(parents=True, exist_ok=True)
-        delivery.write_bytes(sheet_path.read_bytes())
-        report["delivery"] = str(delivery.relative_to(REPO_ROOT))
     payload = _jsonable(report)
     require_clean(payload["question"], source="report_question")
     require_clean(payload["holdout"]["cover"], source="report_cover")
@@ -164,6 +151,5 @@ def run_live(log_dir: Path, *, cache_dir: Path) -> dict[str, Any]:
         counties=counties,
         facilities=facilities,
         fixture=False,
-        buyer=True,
         extra={"fetch_meta": meta},
     )

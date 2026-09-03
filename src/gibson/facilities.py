@@ -1,4 +1,4 @@
-# Copyright (c) 2026 Martial Systems LLC. All rights reserved.
+# Copyright (c) 2026 Martial Systems LLC
 """Facility coordinates: GIS name match, else host-county centroid from ID prefix."""
 
 from __future__ import annotations

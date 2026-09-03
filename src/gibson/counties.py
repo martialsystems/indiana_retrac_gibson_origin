@@ -1,4 +1,4 @@
-# Copyright (c) 2026 Martial Systems LLC. All rights reserved.
+# Copyright (c) 2026 Martial Systems LLC
 """Frozen 2020 county population and centroids. Name aliases for IDEM spellings."""
 
 from __future__ import annotations

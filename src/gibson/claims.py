@@ -1,4 +1,4 @@
-# Copyright (c) 2026 Martial Systems LLC. All rights reserved.
+# Copyright (c) 2026 Martial Systems LLC
 """Fail closed: Gibson assignment, not a waste forecast."""
 
 from __future__ import annotations

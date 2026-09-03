@@ -1,5 +1,5 @@
 # Copyright (c) 2026 Martial Systems LLC
-"""Two answers. Do not average cell assignment with the quarterly total."""
+"""README must ship the RWS Type I / Duke CCR / not MSW line."""
 
 from __future__ import annotations
 
@@ -10,10 +10,10 @@ from gibsonforge.graphs._common import binary_graph
 
 def _evaluate(state: dict[str, Any]) -> dict[str, Any]:
     v: list[str] = []
-    if state.get("answers_averaged"):
-        v.append("answers_averaged")
+    if state.get("rws_missing"):
+        v.append("rws_missing")
     return {"violations": v, "events": [{"node": "evaluate", "ok": not v}]}
 
 
 def build_graph():
-    return binary_graph(name="gibson.two_answers", evaluate=_evaluate, extra=["answers_averaged"])
+    return binary_graph(name="gibson.rws_disclosure", evaluate=_evaluate, extra=["rws_missing"])

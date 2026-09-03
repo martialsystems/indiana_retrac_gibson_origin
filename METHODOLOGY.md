@@ -6,7 +6,7 @@ Question: On Gibson origin-facility-quarter cells, do last year’s same-quarter
 
 Rows: Gibson origin × receiving facility × calendar quarter.
 
-Tons: sum of Municipal Solid Waste, Construction/Demolition, Foundry, Coal Ash, Flue Gas Desulfurization Waste, Other Non-Municipal, and Alternate Daily Cover/Reuse received that quarter from Gibson County. Types stay pooled. On-site Restricted Waste Site Type I at the generating-station landfill is in that pool. A filtered MSW/C&D object, dropping RWS Type I, is a new question and a new lock.
+Tons: sum of Municipal Solid Waste, Construction/Demolition, Foundry, Coal Ash, Flue Gas Desulfurization Waste, Other Non-Municipal, and Alternate Daily Cover/Reuse received that quarter from Gibson County. Types stay pooled. On-site Restricted Waste Site Type I at the generating-station landfill is in that pool. A filtered MSW object, dropping Restricted Waste Site Type I, is a new question and a new lock.
 
 Out-of-state origin is dropped. Unmatched county names fail closed. The join is the same public IDEM XLSX join as parent `5800fc3`, then restricted to origin = Gibson.
 
@@ -50,10 +50,11 @@ When scoring the Gibson quarterly total, the bar is scaled to the observed Gibso
 
 ## Metrics
 
-Two answers. Do not average them.
+Three sentences. Do not average the first two. Do not omit the third.
 
 1. Holdout RMSE in tons on Gibson origin-facility-quarter cells where last year is present (intersection). MAE second. Bar RMSE on all reported Gibson holdout cells is a second line, not mixed into the win.
 2. Gibson origin-quarter total RMSE. Last year can miss this year’s tonnage. The bar cannot.
+3. Share of reported 2024 Gibson-origin tons at 26-06, a Restricted Waste Site Type I (Duke CCR), not MSW.
 
 Parent `5800fc3` is a statewide citation only. That lock’s Gibson row used statewide J. This tree does not restamp it and does not promote a statewide win.
 
@@ -62,15 +63,13 @@ Parent `5800fc3` is a statewide citation only. That lock’s Gibson row used sta
 1. Holdout scatter: last year and the bar vs observed tons on the intersection, 1:1. Caption: tons of error.
 2. Destination rank: 2023 share versus 2024 share by receiving facility. Caption: rank of plants.
 
-Two figures max. They live on the buyer sheet, not in the README.
-
-## Buyer file
-
-Buyer packet: operator PDF with who, two answers, plants, how to read a row, and what is missing; one table of Gibson 2024 reported cells (2023 tons and share, 2024 tons and share, residual, bar share on the intersection); a CSV of the same 48 rows and columns; a five-line cover email. Delivered under `delivery/`. Not a git clone. Sheet lock `c89de5b`.
+Two figures max.
 
 ## Residual
 
-Miles are great-circle. Host-county centroids inflate bar error on those rows. 2024-only facilities get bar mass 0. Confirmation cannot reopen the holdout unless the cell sign reverses.
+26-06 is a centroid.
+Miles are great-circle.
+Out-of-state origin rows are dropped.
 
 ## Fixture
 

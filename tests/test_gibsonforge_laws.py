@@ -1,4 +1,4 @@
-# Copyright (c) 2026 Martial Systems LLC. All rights reserved.
+# Copyright (c) 2026 Martial Systems LLC
 
 import sys
 from pathlib import Path
@@ -16,14 +16,12 @@ from graphforge.product_law import LawBlockedError
 
 from gibson.config import PARENT_LOCK, SHEET_LOCK
 from gibsonforge.gate import (
-    require_buyer_pdf_only,
     require_claims,
     require_locks,
     require_observed,
-    require_readme_no_rows,
+    require_rws_disclosure,
     require_stage0,
     require_two_answers,
-    require_wrong_buyer,
 )
 from gibsonforge.observe import observe
 from gibsonforge.product_laws import laws
@@ -36,14 +34,9 @@ def test_laws_allow_and_block() -> None:
     require_two_answers(thread_id="t.a.ok")
     with pytest.raises(LawBlockedError):
         require_two_answers(answers_averaged=True, thread_id="t.a.avg")
-    require_readme_no_rows(thread_id="t.r.ok")
+    require_rws_disclosure(thread_id="t.r.ok")
     with pytest.raises(LawBlockedError):
-        require_readme_no_rows(readme_has_county_rows=True, thread_id="t.r.rows")
-    require_buyer_pdf_only(thread_id="t.b.ok")
-    with pytest.raises(LawBlockedError):
-        require_buyer_pdf_only(gibson_table_outside_pdf=True, thread_id="t.b.table")
-    with pytest.raises(LawBlockedError):
-        require_buyer_pdf_only(buyer_pdf_missing=True, thread_id="t.b.pdf")
+        require_rws_disclosure(rws_missing=True, thread_id="t.r.miss")
     require_locks(thread_id="t.l.ok")
     with pytest.raises(LawBlockedError):
         require_locks(parent_restamped=True, thread_id="t.l.parent")
@@ -64,33 +57,22 @@ def test_laws_allow_and_block() -> None:
         require_claims(truck_routing=True, thread_id="t.c.truck")
     with pytest.raises(LawBlockedError):
         require_claims(next_year_forecast=True, thread_id="t.c.nxt")
-    require_wrong_buyer(thread_id="t.w.ok")
-    with pytest.raises(LawBlockedError):
-        require_wrong_buyer(addressed_to_swmd=True, thread_id="t.w.swmd")
-    with pytest.raises(LawBlockedError):
-        require_wrong_buyer(district_msw_pitch=True, thread_id="t.w.pitch")
     assert {row["id"] for row in laws()} == {
         "gibson.stage0_before_live",
         "gibson.two_answers",
-        "gibson.readme_no_rows",
-        "gibson.buyer_pdf_only",
+        "gibson.rws_disclosure",
         "gibson.locks",
-        "gibson.wrong_buyer",
         "gibson.claim_bans",
     }
 
 
-def test_frozen_invoice_observes_clean() -> None:
+def test_frozen_live_observes_clean() -> None:
     obs = observe(REPO, fixture=False, overwrite_frozen_sheet=False)
     assert obs["stage0_ok"] is True
     assert obs["answers_averaged"] is False
-    assert obs["readme_has_county_rows"] is False
-    assert obs["gibson_table_outside_pdf"] is False
-    assert obs["buyer_pdf_missing"] is False
+    assert obs["rws_missing"] is False
     assert obs["parent_restamped"] is False
     assert obs["sheet_restamped"] is False
-    assert obs["addressed_to_swmd"] is False
-    assert obs["district_msw_pitch"] is False
     assert obs["sheet_lock"] == SHEET_LOCK
     assert obs["parent_lock"] == PARENT_LOCK
     require_observed(obs, fixture=False, thread_id="t.obs")

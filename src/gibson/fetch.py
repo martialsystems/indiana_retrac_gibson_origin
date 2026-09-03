@@ -1,4 +1,4 @@
-# Copyright (c) 2026 Martial Systems LLC. All rights reserved.
+# Copyright (c) 2026 Martial Systems LLC
 """Live IDEM XLSX + GIS. Empty Gibson rows, unmatched origin, or missing CRS stops."""
 
 from __future__ import annotations

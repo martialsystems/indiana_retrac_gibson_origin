@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2026 Martial Systems LLC. All rights reserved.
+# Copyright (c) 2026 Martial Systems LLC
 from __future__ import annotations
 
 import sys
@@ -25,7 +25,7 @@ def main() -> int:
         report["last_year_beats_bar"],
     )
     print("origin-total", hold["origin_total"])
-    print(report["figures"], report.get("sheet"))
+    print(report["figures"])
     return 0
 
 

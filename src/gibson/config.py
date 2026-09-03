@@ -1,4 +1,4 @@
-# Copyright (c) 2026 Martial Systems LLC. All rights reserved.
+# Copyright (c) 2026 Martial Systems LLC
 """Locked Gibson-origin last year vs origin-pop / miles."""
 
 from __future__ import annotations
@@ -81,13 +81,15 @@ LIVE_SCATTER_SUBTITLE = (
 LIVE_RANK_SUBTITLE = (
     "2023 share versus 2024 share by receiving facility. Rank of plants."
 )
-PACKET_SCATTER_TITLE = "Gibson 2024 origin-facility-quarter tons"
-PACKET_SCATTER_SUBTITLE = "Last year (orange). Inverse-miles (grey-blue)."
-PACKET_RANK_TITLE = "Gibson 2023 share versus 2024 share"
-PACKET_RANK_SUBTITLE = "26-06 at 0.98. The rest at the origin."
-PACKET_FOOTNOTE = (
-    "Method question (not a forecast): last-year same-quarter tons vs inverse-miles "
-    "on held-out 2024 cells."
-)
 FIXTURE_SCATTER_SUBTITLE = "Fixture planted last-year persistence. Does not rescue live."
 FIXTURE_RANK_SUBTITLE = "Fixture destination shares. Does not rescue live."
+
+# Public README must ship these three. Omitting the third republishes the SWMD mistake.
+THREE_SENTENCES = (
+    "Last year wins assignment on 35 cells (15,596.8 vs 35,014.7).",
+    "Last year loses the four quarter totals (45,939.1 vs 0.0).",
+    "97.8% of reported Gibson-origin tons in 2024 went to 26-06, a Restricted Waste Site Type I (Duke CCR), not MSW.",
+)
+TYPE_OVERRIDE = {
+    "26-06": "Restricted Waste Site Type I (Duke CCR)",
+}

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2026 Martial Systems LLC. All rights reserved.
+# Copyright (c) 2026 Martial Systems LLC
 from __future__ import annotations
 
 import subprocess
@@ -41,9 +41,7 @@ def main() -> int:
         {k: obs[k] for k in (
             "stage0_ok",
             "answers_averaged",
-            "readme_has_county_rows",
-            "gibson_table_outside_pdf",
-            "buyer_pdf_missing",
+            "rws_missing",
             "parent_restamped",
             "sheet_restamped",
             "overwrite_frozen_sheet",

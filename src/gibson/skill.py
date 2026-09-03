@@ -1,4 +1,4 @@
-# Copyright (c) 2026 Martial Systems LLC. All rights reserved.
+# Copyright (c) 2026 Martial Systems LLC
 """RMSE tons. Last year vs mileage-plus-population. Origin pop cancels."""
 
 from __future__ import annotations

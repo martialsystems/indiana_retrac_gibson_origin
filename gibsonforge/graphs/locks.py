@@ -1,4 +1,4 @@
-# Copyright (c) 2026 Martial Systems LLC. All rights reserved.
+# Copyright (c) 2026 Martial Systems LLC
 """Parent 5800fc3 and sheet lock c89de5b stay frozen."""
 
 from __future__ import annotations

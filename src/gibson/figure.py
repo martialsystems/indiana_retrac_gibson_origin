@@ -1,4 +1,4 @@
-# Copyright (c) 2026 Martial Systems LLC. All rights reserved.
+# Copyright (c) 2026 Martial Systems LLC
 """Two figures: holdout scatter, destination rank (2023 share vs 2024 share)."""
 
 from __future__ import annotations
@@ -15,10 +15,6 @@ from gibson.config import (
     LIVE_RANK_SUBTITLE,
     LIVE_SCATTER_SUBTITLE,
     MAX_FIGURES,
-    PACKET_RANK_SUBTITLE,
-    PACKET_RANK_TITLE,
-    PACKET_SCATTER_SUBTITLE,
-    PACKET_SCATTER_TITLE,
 )
 from gibson.errors import FigureCapError
 
@@ -130,37 +126,3 @@ def write_two(log_dir: Path, *, fit: dict[str, Any], live: bool) -> list[str]:
     paths = [a, b]
     _cap(len(paths))
     return [p.name for p in paths]
-
-
-def _fit_from_frozen_cells(hold: dict[str, Any]) -> dict[str, Any]:
-    ix = [c for c in hold.get("cells") or [] if c.get("intersection") and c.get("tons_prior") is not None]
-    return {
-        "holdout": {
-            "obs_ly": [float(c["tons"]) for c in ix],
-            "pred_ly": [float(c["tons_prior"]) for c in ix],
-            "obs_bar": [float(c["tons"]) for c in ix],
-            "pred_bar": [float(c["bar_tons"]) for c in ix],
-            "destinations": list(hold.get("destinations") or []),
-        }
-    }
-
-
-def write_packet_figures(dest_dir: Path, hold: dict[str, Any]) -> list[str]:
-    """Rebuild packet figures from frozen cells. Does not call score()."""
-    fit = _fit_from_frozen_cells(hold)
-    _cap(2)
-    dest_dir.mkdir(parents=True, exist_ok=True)
-    a = write_scatter(
-        dest_dir / "scatter.png",
-        fit=fit,
-        title=PACKET_SCATTER_TITLE,
-        subtitle=PACKET_SCATTER_SUBTITLE,
-    )
-    b = write_rank(
-        dest_dir / "dest_rank.png",
-        fit=fit,
-        title=PACKET_RANK_TITLE,
-        subtitle=PACKET_RANK_SUBTITLE,
-    )
-    _cap(2)
-    return [a.name, b.name]

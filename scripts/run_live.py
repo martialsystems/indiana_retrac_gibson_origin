@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2026 Martial Systems LLC. All rights reserved.
+# Copyright (c) 2026 Martial Systems LLC
 """Live IDEM quarterly XLSX, Gibson origin only. Empty cores stop. Stage 0 first."""
 
 from __future__ import annotations
@@ -41,7 +41,7 @@ def main() -> int:
         hold["origin_total"]["bar_rmse"],
     )
     print("n_point", report["n_point"], "n_centroid", report["n_centroid"])
-    print(report["figures"], report.get("delivery"))
+    print(report["figures"])
     return 0
 
 

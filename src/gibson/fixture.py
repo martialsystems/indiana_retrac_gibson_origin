@@ -1,4 +1,4 @@
-# Copyright (c) 2026 Martial Systems LLC. All rights reserved.
+# Copyright (c) 2026 Martial Systems LLC
 """One-origin fixture with planted last-year persistence. Does not rescue live."""
 
 from __future__ import annotations

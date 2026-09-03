@@ -1,4 +1,4 @@
-# Copyright (c) 2026 Martial Systems LLC. All rights reserved.
+# Copyright (c) 2026 Martial Systems LLC
 """Injectable GET. Re-TRAC login URLs are refused."""
 
 from __future__ import annotations

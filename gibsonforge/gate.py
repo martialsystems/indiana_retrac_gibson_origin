@@ -1,4 +1,4 @@
-# Copyright (c) 2026 Martial Systems LLC. All rights reserved.
+# Copyright (c) 2026 Martial Systems LLC
 """Call sites for refuse laws."""
 
 from __future__ import annotations
@@ -11,13 +11,11 @@ ensure_paths()
 
 from graphforge.product_law import require_law
 
-from gibsonforge.graphs.buyer_pdf_only import build_graph as build_buyer
 from gibsonforge.graphs.claim_bans import build_graph as build_claims
 from gibsonforge.graphs.locks import build_graph as build_locks
-from gibsonforge.graphs.readme_no_rows import build_graph as build_readme
+from gibsonforge.graphs.rws_disclosure import build_graph as build_rws
 from gibsonforge.graphs.stage0_before_live import build_graph as build_stage0
 from gibsonforge.graphs.two_answers import build_graph as build_two
-from gibsonforge.graphs.wrong_buyer import build_graph as build_buyer_wrong
 
 
 def require_stage0(**flags: Any) -> None:
@@ -48,29 +46,15 @@ def require_two_answers(**flags: Any) -> None:
     )
 
 
-def require_readme_no_rows(**flags: Any) -> None:
-    thread_id = str(flags.pop("thread_id", "gibson_readme"))
-    state = {"readme_has_county_rows": False}
+def require_rws_disclosure(**flags: Any) -> None:
+    thread_id = str(flags.pop("thread_id", "gibson_rws"))
+    state = {"rws_missing": False}
     state.update(flags)
     require_law(
-        build_readme(),
+        build_rws(),
         state,
         allow_decisions=["allow"],
-        law_id="gibson.readme_no_rows",
-        thread_id=thread_id,
-        raise_error=True,
-    )
-
-
-def require_buyer_pdf_only(**flags: Any) -> None:
-    thread_id = str(flags.pop("thread_id", "gibson_buyer"))
-    state = {"gibson_table_outside_pdf": False, "buyer_pdf_missing": False}
-    state.update(flags)
-    require_law(
-        build_buyer(),
-        state,
-        allow_decisions=["allow"],
-        law_id="gibson.buyer_pdf_only",
+        law_id="gibson.rws_disclosure",
         thread_id=thread_id,
         raise_error=True,
     )
@@ -115,26 +99,9 @@ def require_claims(**flags: Any) -> None:
     )
 
 
-def require_wrong_buyer(**flags: Any) -> None:
-    thread_id = str(flags.pop("thread_id", "gibson_buyer_wrong"))
-    state = {"addressed_to_swmd": False, "district_msw_pitch": False}
-    state.update(flags)
-    require_law(
-        build_buyer_wrong(),
-        state,
-        allow_decisions=["allow"],
-        law_id="gibson.wrong_buyer",
-        thread_id=thread_id,
-        raise_error=True,
-    )
-
-
 def require_observed(obs: dict[str, Any], *, fixture: bool, thread_id: str) -> None:
     require_two_answers(answers_averaged=obs["answers_averaged"], thread_id=f"{thread_id}.two")
-    require_readme_no_rows(
-        readme_has_county_rows=obs["readme_has_county_rows"],
-        thread_id=f"{thread_id}.readme",
-    )
+    require_rws_disclosure(rws_missing=obs["rws_missing"], thread_id=f"{thread_id}.rws")
     require_claims(
         casualty=obs["casualty"],
         climate_attr=obs["climate_attr"],
@@ -147,19 +114,9 @@ def require_observed(obs: dict[str, Any], *, fixture: bool, thread_id: str) -> N
     if fixture:
         return
     require_stage0(stage0_ok=obs["stage0_ok"], thread_id=f"{thread_id}.stage0")
-    require_buyer_pdf_only(
-        gibson_table_outside_pdf=obs["gibson_table_outside_pdf"],
-        buyer_pdf_missing=obs["buyer_pdf_missing"],
-        thread_id=f"{thread_id}.buyer",
-    )
     require_locks(
         parent_restamped=obs["parent_restamped"],
         sheet_restamped=obs["sheet_restamped"],
         overwrite_frozen_sheet=obs["overwrite_frozen_sheet"],
         thread_id=f"{thread_id}.locks",
-    )
-    require_wrong_buyer(
-        addressed_to_swmd=obs["addressed_to_swmd"],
-        district_msw_pitch=obs["district_msw_pitch"],
-        thread_id=f"{thread_id}.buyer_wrong",
     )

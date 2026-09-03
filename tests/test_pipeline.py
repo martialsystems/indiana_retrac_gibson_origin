@@ -1,4 +1,4 @@
-# Copyright (c) 2026 Martial Systems LLC. All rights reserved.
+# Copyright (c) 2026 Martial Systems LLC
 
 import json
 from pathlib import Path
@@ -15,7 +15,7 @@ def test_fixture_two_figures(tmp_path: Path) -> None:
     assert report["figures"] == ["scatter.png", "dest_rank.png"]
     assert (tmp_path / "scatter.png").is_file()
     assert (tmp_path / "dest_rank.png").is_file()
-    assert (tmp_path / "fixture_sheet.pdf").is_file()
+    assert not (tmp_path / "fixture_sheet.pdf").is_file()
     assert report["contestant"] == "last_year"
     assert report["ridge"] is False
     assert report["live_retrac_login"] is False

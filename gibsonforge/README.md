@@ -1,17 +1,15 @@
 # gibsonforge
 
-GraphForge pin for `indiana_retrac_gibson_origin`. Private invoice tripwire.
+GraphForge pin for `indiana_retrac_gibson_origin`.
 
 Laws that refuse:
 
 - Stage 0 fixture missing before live
 - Two answers averaged or flattened into one win
-- README ships Gibson county rows
-- A Gibson cell table outside the buyer packet (PDF plus one delivery CSV)
-- Addressed to the county SWMD, or sold as a district MSW finding
-- Parent `5800fc3` restamped, or sheet lock `c89de5b` refreshed
+- README missing the three-sentence lock (assignment win, quarter-total loss, 26-06 Restricted Waste Site Type I / Duke CCR / not MSW)
+- Parent `5800fc3` restamped, or science lock `c89de5b` refreshed
 - Claim bans: casualties, climate attribution, population-at-risk, logistics optimized, truck routing, next-year Gibson total
 
-Fixture RMSE, figure styling, and gist presence stay on pytest and vbd_gate.
+Fixture RMSE and figure styling stay on pytest and vbd_gate.
 
 Verify-before-done is the finish gate.
