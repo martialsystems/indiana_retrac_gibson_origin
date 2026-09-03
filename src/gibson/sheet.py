@@ -109,7 +109,7 @@ def packet_copy(report: dict[str, Any]) -> dict[str, str]:
     plants = plant_sentences(hold)
     how = (
         "How to read a row: 2023 tons, 2023 share, 2024 tons, 2024 share, residual. "
-        "A positive residual means 2024 sent more to that plant than 2023’s habit."
+        "A positive residual means 2024 tons exceeded 2023 same-quarter tons at that plant."
     )
     missing = (
         "What is missing. Miles: great-circle. Centroids: nine destinations sit on the "

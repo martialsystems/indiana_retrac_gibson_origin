@@ -25,7 +25,11 @@ def test_buyer_pdf_has_cover_and_rows() -> None:
     assert "one origin" in text.lower()
     assert "Held-out 2024" in text
     assert "How to read a row" in text
-    assert "positive residual" in text
+    assert "2024 tons exceeded 2023 same-quarter tons at that plant" in text
+    assert "habit" not in text.lower()
+    q3 = next(c for c in hold["cells"] if c["facility_id"] == "26-06" and c["quarter"] == 3)
+    assert q3["residual_tons"] == q3["tons"] - q3["tons_prior"]
+    assert abs(q3["residual_tons"] - 83255.0) < 0.1
     assert "great-circle" in text
     assert "nine destinations" in text.lower() or "Nine destinations" in text
     assert "Out-of-state origins" in text
