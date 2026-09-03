@@ -29,9 +29,11 @@ def test_readme_opens_with_the_question() -> None:
     assert "gibsonforge/" in text
     assert "6504.7" in text
     assert "16633.0" in text
+    assert "15597" in text
+    assert "76281" in text
     assert "origin pop cancels" in text.lower() or "origin population cancels" in text.lower()
-    assert "wins assignment" in text
-    assert "loses the four quarter totals" in text
+    assert "wins assignment" in text or "wins the cell-by-cell assignment" in text
+    assert "loses the quarterly totals" in text
     if live["confirm_reverses_holdout"]:
         assert "revers" in text.lower()
     else:

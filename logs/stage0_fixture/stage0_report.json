@@ -1,7 +1,7 @@
 {
   "stage": "0",
   "fixture": true,
-  "question": "On Gibson origin-facility-quarter cells, do last year\u2019s same-quarter shipments beat mileage-plus-population on held-out 2024?",
+  "question": "For waste that originated in Gibson County, Indiana, does \"same facility, same quarter, last year\" beat a simple distance-weighted split of this year\u2019s total when you hold out 2024?",
   "contestant": "last_year",
   "bar": "mileage_plus_population",
   "ridge": false,

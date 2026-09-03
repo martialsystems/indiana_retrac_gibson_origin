@@ -6,8 +6,9 @@ from __future__ import annotations
 from pathlib import Path
 
 QUESTION = (
-    "On Gibson origin-facility-quarter cells, do last year’s same-quarter "
-    "shipments beat mileage-plus-population on held-out 2024?"
+    "For waste that originated in Gibson County, Indiana, does "
+    '"same facility, same quarter, last year" beat a simple '
+    "distance-weighted split of this year’s total when you hold out 2024?"
 )
 ORIGIN_KEY = "gibson"
 ORIGIN_NAME = "Gibson"
@@ -86,9 +87,9 @@ FIXTURE_RANK_SUBTITLE = "Fixture destination shares. Does not rescue live."
 
 # Public README must ship these three. Omitting the third republishes the SWMD mistake.
 THREE_SENTENCES = (
-    "Last year wins assignment on 35 cells (15,596.8 vs 35,014.7).",
-    "Last year loses the four quarter totals (45,939.1 vs 0.0).",
-    "97.8% of reported Gibson-origin tons in 2024 went to 26-06, a Restricted Waste Site Type I (Duke CCR), not MSW.",
+    "Last year wins the cell-by-cell assignment.",
+    "It loses the quarterly totals (because the distance model is forced to hit this year’s total exactly).",
+    "97.8% of 2024 reported Gibson-origin tons went to 26-06, Restricted Waste Site Type I (Duke CCR), not an MSW landfill.",
 )
 TYPE_OVERRIDE = {
     "26-06": "Restricted Waste Site Type I (Duke CCR)",

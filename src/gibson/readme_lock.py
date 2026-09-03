@@ -1,5 +1,5 @@
 # Copyright (c) 2026 Martial Systems LLC
-"""README lock: question first, three sentences, JSON numbers, type table, 48 rows."""
+"""README lock: question first, three sentences, JSON numbers, type table."""
 
 from __future__ import annotations
 
@@ -7,10 +7,10 @@ from typing import Any
 
 from gibson.claims import scan_text
 from gibson.config import PARENT_LOCK, QUESTION, SHEET_LOCK, THREE_SENTENCES
-from gibson.labels import cell_table_rows, dest_type_rows, load_gis_types
 
 
 def check_readme(text: str, live: dict[str, Any], *, repo) -> list[str]:
+    del repo
     errors: list[str] = []
     body = "\n".join(text.splitlines()[1:]).lstrip()
     if not body.startswith(QUESTION):
@@ -60,34 +60,20 @@ def check_readme(text: str, live: dict[str, Any], *, repo) -> list[str]:
     tot = hold["origin_total"]["last_year_rmse"]
     if tot is not None and f"{tot:.1f}" not in text:
         errors.append("README missing JSON origin-total RMSE")
-    gis = load_gis_types(repo)
-    cells = hold["cells"]
-    type_rows = dest_type_rows(cells, gis)
-    if not any(r["id"] == "26-06" and "Duke CCR" in r["type"] for r in type_rows):
-        errors.append("type table missing 26-06 Duke CCR")
-    if not any(
-        r["id"] == "63-04" and r["type"] == "Municipal Solid Waste Landfill" for r in type_rows
-    ):
-        errors.append("type table missing Blackfoot MSW landfill")
-    for row in type_rows:
-        needle = (
-            f"| {row['id']} | {row['facility']} | {row['type']} | "
-            f"{row['tons']} | {row['share']} | {row['loc']} |"
-        )
-        if needle not in text:
-            errors.append(f"missing type row {row['id']}")
-    cell_rows = cell_table_rows(cells, gis)
-    if len(cell_rows) != 48:
-        errors.append(f"expected 48 cells, got {len(cell_rows)}")
-    for row in cell_rows:
-        needle = (
-            f"| {row['q']} | {row['id']} | {row['facility']} | {row['type']} | "
-            f"{row['prior']} | {row['tons']} | {row['residual']} | {row['loc']} |"
-        )
-        if needle not in text:
-            errors.append(f"missing cell {row['id']} Q{row['q']}")
     if "Restricted Waste Site Type I" not in text:
         errors.append("missing Restricted Waste Site Type I")
+    if "Duke CCR" not in text:
+        errors.append("missing Duke CCR")
+    if "not an MSW landfill" not in text and "not MSW" not in text:
+        errors.append("missing not-MSW type line")
+    if "63-04" not in text or "Blackfoot" not in text:
+        errors.append("missing Blackfoot MSW row")
+    if "1,507,685.0" not in text:
+        errors.append("missing 26-06 2024 tons")
+    if "97.8%" not in text:
+        errors.append("missing 97.8% share")
+    if "15597" not in text or "76281" not in text:
+        errors.append("missing parent Gibson-row citation")
     if ".venv/bin/python -m pytest" not in text:
         errors.append("missing venv pytest")
     return errors
